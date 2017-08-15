@@ -1,0 +1,78 @@
+---
+ospf_vrf_default:
+  description: "Check OSPF interfaces vrf default"
+  command: show ip ospf interface brief vrf default
+  jsonpath: TABLE_ctx/ROW_ctx/TABLE_intf/ROW_intf
+  attr: ifname
+  items:
+    - ifname
+    - nbr_total
+    - area
+
+bgp_vrf_default:
+  description: "Check BGP neighbors"
+  command: show bgp sessions
+  jsonpath: TABLE_vrf/ROW_vrf/TABLE_neighbor/ROW_neighbor
+  attr: neighbor-id
+  items:
+    - neighbor-id
+    - state
+    - remoteas
+
+lldp:
+  description: "Check LLDP neighbors"
+  command: show lldp neighbors
+  jsonpath: TABLE_nbor/ROW_nbor
+  attr: chassis_id
+  items:
+    - l_port_id
+    - chassis_id
+
+pim_vrf_default:
+  description: "Check PIM neighbors vrf default"
+  command: show ip pim interface vrf default
+  jsonpath: TABLE_vrf/ROW_vrf/TABLE_iod/ROW_iod
+  attr: if-name
+  items:
+    - if-name
+    - nbr-cnt
+    - pim-dr-address
+
+msdp_vrf_default:
+  description: "Check MSDP neighbors vrf default"
+  command: show ip msdp summary vrf default
+  jsonpath: TABLE_peer/ROW_peer
+  attr: peer-address
+  items:
+    - peer-address
+    - peer-state
+
+vrrp:
+  description: "Check VRRP mastership"
+  command: show vrrp
+  jsonpath: TABLE_vrrp_group
+  attr: ROW_vrrp_group/sh_if_index
+  items:
+    - ROW_vrrp_group/sh_if_index
+    - ROW_vrrp_group/sh_group_id
+    - ROW_vrrp_group/sh_group_state
+
+ip_int_status_vrf_default:
+  description: "Check ip interfaces state vrf default"
+  command: show ip interface brief
+  jsonpath: TABLE_intf
+  attr: ROW_intf/intf-name
+  items:
+    - ROW_intf/intf-name
+    - ROW_intf/proto-state
+    - ROW_intf/link-state
+
+linecard_state:
+  description: "Check linecard state"
+  command: show module
+  jsonpath: TABLE_modinfo/ROW_modinfo
+  attr: modinf
+  items:
+    - modinf
+    - model
+    - status
